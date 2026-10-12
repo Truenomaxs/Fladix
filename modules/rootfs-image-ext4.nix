@@ -1,14 +1,17 @@
 { pkgs, rootfsTree }:
 
-pkgs.runCommand "amongOS-rootfs.ext4"
+pkgs.runCommand "fladix-rootfs.ext4"
   {
     nativeBuildInputs = [ pkgs.e2fsprogs ];
   }
   ''
-    truncate -s 1G $out
+    truncate -s 1G "$out"
 
     mkfs.ext4 -F \
-      -L AMONGOS \
+      -L FLADIX \
       -d ${rootfsTree} \
-      $out
+      "$out"
+
+    # Validate the completed filesystem without modifying it.
+    e2fsck -fn "$out"
   ''

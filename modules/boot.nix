@@ -1,7 +1,7 @@
 { pkgs }:
 
 let
-  kernel = pkgs.linuxPackages.kernel;
+  kernel = pkgs.linuxPackages_latest.kernel;
   busybox = pkgs.busybox;
 
   modules = [
