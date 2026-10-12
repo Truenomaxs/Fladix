@@ -10,7 +10,7 @@ let
       coreutils
       util-linux
       dinit
-
+      busybox
       # System inspection
       procps
       htop
