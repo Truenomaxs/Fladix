@@ -12,4 +12,9 @@ pkgs.runCommand "fladix-dinit-config" { } ''
   type = process
   command = ${pkgs.util-linux}/bin/agetty --noclear --noissue -n -l /bin/bash ttyS0 115200 vt100
   EOF
+
+    test -x ${pkgs.util-linux}/bin/agetty
+
+    ${pkgs.dinit}/bin/dinit-check \
+      --services-dir "$out/etc/dinit.d" boot
 ''
