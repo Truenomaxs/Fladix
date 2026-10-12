@@ -27,7 +27,15 @@ let
     ];
 
   };
+  osRelease = pkgs.writeText "fladix-os-release" ''
+    NAME="Fladix"
+    PRETTY_NAME="Fladix Linux"
+    ID=fladix
+    VERSION="0.1"
+    VERSION_ID="0.1"
+  '';
 
+  hostname = pkgs.writeText "Fladix-hostname" "Fladix\n";
   closure = pkgs.closureInfo {
     rootPaths = [ rootfs ];
   };
@@ -39,6 +47,11 @@ pkgs.runCommand "fladix-rootfs-tree" { } ''
 
     cp -a ${rootfs}/. $out/
   cp -a ${dinitConfig}/etc/. $out/etc/
+
+          chmod u+w $out/etc
+    cp ${osRelease} $out/etc/os-release
+    cp ${hostname} $out/etc/hostname
+
     while IFS= read -r path; do
       cp -a "$path" "$out/nix/store/"
     done < ${closure}/store-paths

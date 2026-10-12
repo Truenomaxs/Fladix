@@ -35,6 +35,11 @@ let
     mount -t ext4 /dev/vda /root ||
       exec setsid cttyhack sh
 
+    if [ -r /root/etc/hostname ]; then
+      hostname "$(cat /root/etc/hostname)"
+    fi
+
+
     mkdir -p /root/dev /root/proc /root/sys /root/run
 
     mount --move /dev /root/dev
